@@ -1,15 +1,17 @@
-import { MongoClient } from 'mongodb'
-
 const url = process.env.MONGO_URI
+import mongoose from "mongoose"
 const database = process.env.MONGO_DB
 
-const client = new MongoClient(url)
-
-let db
-
-export const getDb = async (req, res) => {
-    if (db) return db
-    await client.connect()
-    db = client.db(database)
-    return db
+export const getDb = async () => {
+    mongoose.set('bufferCommands', false)
+    try {
+        await mongoose.connect(url, { dbName: database })
+            .then(() => {
+                console.log('successfully connected to database')
+            })
+            .catch(err => console.log('error connecting to db', err.message))
+    }
+    catch (err) {
+        console.log('error getting db', err.message)
+    }
 }
