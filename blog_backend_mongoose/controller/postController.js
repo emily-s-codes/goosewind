@@ -69,6 +69,7 @@ export const getSinglePost = async (req, res) => {
 }
 
 export const deletePost = async (req, res) => {
+    console.log(req.body)
     await deleteImage(req.body.public_id)
     try {
         const result = await Post.deleteOne({ _id: new ObjectId(req.body.id) })
@@ -85,9 +86,10 @@ export const editPost = async (req, res) => {
     try {
         if (req.body.old_id) {
             await deleteImage(req.body.old_id)
-            delete req.body.old_id
         }
-        const update = await Post.updateOne({ _id: new ObjectId(params) }, { title: req.body.title, slug: req.body.slug, content: req.body.content, image: { url: req.body.url, public_id: req.body.public_id }, updatedAt: new Date() })
+        const update = await Post.updateOne({ _id: new ObjectId(params) }, { title: req.body.title, slug: req.body.slug, content: req.body.content, image: { url: req.body.url, public_id: req.body.public_id } })
+        const updatedPost = await Post.find({ _id: new ObjectId(params) }).populate('author')
+        console.log(updatedPost)
         res.status(200).json(update)
     } catch (error) {
         res.status(418).end(error.message)
