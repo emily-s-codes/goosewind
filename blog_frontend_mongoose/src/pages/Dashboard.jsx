@@ -71,17 +71,22 @@ const Dashboard = ({ setTimedOut, setFetching, fetching, setUpdate, update, user
 
     return (
         <main>
-            <h1>My Blog</h1>
+            <h1 className="text-center text-6xl text-blue-800">GooseWind</h1>
             {fetching &&
                 <Spinner />}
             {user &&
                 <>
-                    <section>
-                        <p>Welcome back, {user.first}!</p>
-                        <Button onclick={() => setOpenEditor(prev => !prev)} title={openEditor ? 'Cancel' : 'Add Post'} />
+                    <section className="flex flex-col">
+                        <p className="text-blue-800 text-center mt-4 mb-10">Welcome back, {user.first}!</p>
+                        <section className="flex justify-center gap-10">
+                            <Button onclick={() => setOpenEditor(prev => !prev)} title={openEditor ? 'Cancel' : 'Add Post'} />
+
+                            <Button onclick={logout} title="Log Out" />
+                        </section>
                         {openEditor &&
-                            <AddPost setOpenEditor={setOpenEditor} setUpdate={setUpdate} />}
-                        <Button onclick={logout} title="Log Out" />
+                            <AddPost setOpenEditor={setOpenEditor} setUpdate={setUpdate} fetching={fetching} setFetching={setFetching} />
+                        }
+
                     </section>
                     <section className="grid grid-cols-2 auto-rows-max">
                         {noPosts &&

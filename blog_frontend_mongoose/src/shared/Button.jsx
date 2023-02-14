@@ -1,9 +1,11 @@
 const Button = (props) => {
     return (
         <button className="
+        self-center
         bg-transparent
         hover:bg-blue-800
         text-blue-800 
+        text-xs
         font-semibold 
         hover:text-white 
         py-2 

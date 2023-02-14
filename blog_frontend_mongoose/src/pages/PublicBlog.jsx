@@ -24,8 +24,8 @@ const PublicBlog = ({ update, setFetching, fetching }) => {
 
     return (
         <main>
-            <h1 className="text-center text-6xl">GooseWind</h1>
-            <section className="grid grid-cols-2">
+            <h1 className="text-center text-6xl text-blue-800">GooseWind</h1>
+            <section className="grid grid-cols-2 my-10 mx-20">
                 {fetching ? <Spinner /> :
                     allPosts?.map((post, key) => {
                         return <SinglePost key={key} post={post} />

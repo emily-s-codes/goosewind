@@ -5,8 +5,8 @@ const LandingPage = ({ fetching, setFetching, unsuccessful, setUnsuccessful }) =
     return (
         <main className="mx-10">
             {unsuccessful &&
-                <p>Login unsuccessful. Please check your email and password and try again.</p>}
-            <h1 className="text-center text-6xl">GooseWind</h1>
+                <p className="text-blue-800">Login unsuccessful. Please check your email and password and try again.</p>}
+            <h1 className="text-center text-6xl text-blue-800">GooseWind</h1>
             {fetching ?
                 <Spinner /> :
                 <LoginForm setUnsuccessful={setUnsuccessful} setFetching={setFetching} />}

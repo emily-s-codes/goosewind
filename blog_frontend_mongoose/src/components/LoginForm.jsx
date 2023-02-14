@@ -29,18 +29,18 @@ const LoginForm = ({ setUnsuccessful, setFetching }) => {
 
 
     return (
-        <section className="flex flex-col items-center">
+        <section className="flex flex-col items-center mb-4">
             <form onSubmit={sendAuth} className="flex flex-col w-2/3 p-10">
-                <input className="my-2 p-2 rounded bg-white" type="email" name="email" placeholder="email" />
-                <input className="my-2 p-2 rounded" type="password" name="pass" placeholder="password" />
+                <input className="my-2 p-2 rounded drop-shadow text-sm" type="email" name="email" placeholder="email" />
+                <input className="my-2 p-2 rounded drop-shadow text-sm" type="password" name="pass" placeholder="password" />
                 {register &&
-                    <input className="my-2 p-2 rounded" type="text" name="first" placeholder="first name" />}
+                    <input className="my-2 p-2 rounded drop-shadow text-sm" type="text" name="first" placeholder="first name" />}
                 {register &&
-                    <input className="my-2 p-2 rounded" type="text" name="last" placeholder="last name" />}
+                    <input className="my-2 p-2 rounded drop-shadow text-sm" type="text" name="last" placeholder="last name" />}
                 <Button type="submit" title={register ? "register" : "login"}></Button>
             </form>
-            <p onClick={() => setRegister(!register)}>{!register ? "New" : "Existing"} user? Click to {!register ? "register" : "log in"}</p>
-        </section>
+            <p className="text-blue-800 hover:underline hover:text-blue-500 cursor-pointer" onClick={() => setRegister(!register)}>{!register ? "New" : "Existing"} user? Click to {!register ? "register" : "log in"}</p>
+        </section >
     );
 }
 
