@@ -9,8 +9,8 @@ const BlogViewSection = (props) => {
         md:grid-cols-2 
         lg:grid-cols-3 
         xl:grid-cols-4 
-        my-10 
-        mx-20">
+        my-4 lg:my-10 
+        mx-4 lg:mx-20">
             {props.children}
         </section>
      );

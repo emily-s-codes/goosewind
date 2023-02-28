@@ -71,7 +71,7 @@ const AddPost = ({ setUpdate, setOpenEditor, setFetching, fetching }) => {
         <>
             {fetching &&
             <Spinner /> }
-            <section className="drop-shadow-xl rounded p-5 flex flex-col my-9 mx-40">
+            <section className="drop-shadow-xl rounded p-5 flex flex-col sm:my-4 sm:mx-10 lg:my-9 lg:mx-40">
                 <input ref={titleRef} type="text" name='title' placeholder="title" className="border text-blue-800 border-blue-800 rounded py-2 px-2 mb-5 " />
                 <input ref={slugRef} type="text" name='slug' placeholder="slug" className="border text-blue-800 border-blue-800 rounded py-2 px-2 mb-5" />
                 <textarea ref={contentRef} name="content" placeholder="write your post here ... " cols="30" rows="10" className="border text-blue-800 border-blue-800 rounded py-2 px-2 mb-5" />

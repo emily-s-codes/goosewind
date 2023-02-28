@@ -4,7 +4,7 @@ import Button from "../shared/Button";
 const SinglePost = ({ post }) => {
 
     return (
-        <section className="text-blue-800 flex flex-col justify-between items-center drop-shadow-2xl mx-10 my-2 p-4 bg-white rounded-xl overflow-hidden">
+        <section className="text-blue-800 flex flex-col justify-between items-center drop-shadow-2xl mx-4 my-4 md:mx-7 md:my-7 lg:mx-10 lg:my-2 p-4 bg-white rounded-xl overflow-hidden">
             <div className="flex flex-col items-center">
                 <h3 className="text-blue-800 text-center h-12 md:text-sm font-bold leading-tight" >{post?.title}</h3>
                 <p className="text-blue-800 text-sm mt-2 text-center h-10 md:h-12 hidden sm:block leading-tight">{post?.slug}</p>

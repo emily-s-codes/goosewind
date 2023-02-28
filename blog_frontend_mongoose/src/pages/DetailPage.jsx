@@ -145,7 +145,7 @@ useEffect(()=>{
                             <img src={newImage ? image : post?.image?.url} alt={post?.title} className="ml-8 object-cover w-48 h-48 rounded-xl" />
                         </div>
                     }
-                    <section className="flex justify-between items-center mb-2">
+                    <section className="flex flex-col md:flex-row justify-between md:items-center mb-2">
                         <div>
                             {edit && <ErrorP content="Tag edit function in production"/>}
                         {post?.tags.map((tag, key)=> {
@@ -156,7 +156,7 @@ useEffect(()=>{
                             {edit && <ErrorP content="These fields cannot be changed"/>}
                             <p className="text-blue-800 text-right">by {post?.author.first}</p>
                             <p className="text-blue-800 text-right">written: {createdDate}</p>
-                            {createdDate !== updatedDate && <p className="text-blue-800">updated: {updatedDate}</p>}
+                            {createdDate !== updatedDate && <p className="text-blue-800 text-right">updated: {updatedDate}</p>}
                         </div>
                     </section>
                     {!edit && <img src={newImage ? image : post?.image?.url} alt={post?.title} className="ml-8 mb-6 float-right object-cover w-96 h-96 rounded-xl" />}
