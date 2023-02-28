@@ -1,6 +1,5 @@
 import { useRef, useState } from "react"
 import Button from "../shared/Button"
-import FileInput from "../shared/FileInput"
 import HashtagComponent from "./Hashtag"
 import Spinner from "./Spinner"
 

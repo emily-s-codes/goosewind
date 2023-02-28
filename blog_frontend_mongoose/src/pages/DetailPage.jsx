@@ -6,7 +6,6 @@ import { DateTime } from "luxon";
 import Tag from "../components/Tag";
 import { UserContext } from "../contexts/UserContext";
 import ErrorP from "../shared/ErrorP";
-import FileInput from "../shared/FileInput";
 
 const DetailPage = ({ setFetching, fetching, update, setUpdate, setUser}) => {
     const user = useContext(UserContext)
