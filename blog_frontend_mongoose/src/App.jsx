@@ -1,4 +1,3 @@
-import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard'
@@ -6,6 +5,8 @@ import { useState } from 'react'
 import PublicBlog from './pages/PublicBlog'
 import Navbar from './components/Navbar'
 import DetailPage from './pages/DetailPage'
+import { UserContext } from './contexts/UserContext'
+import SortByTag from './pages/SortByTag'
 
 function App() {
   const [timedOut, setTimedOut] = useState(false)
@@ -13,15 +14,19 @@ function App() {
   const [fetching, setFetching] = useState(false)
   const [update, setUpdate] = useState(false)
   const [user, setUser] = useState(null)
+  const [loginRequired, setLoginRequired] = useState(false)
+  // const [loggedIn, setLoggedIn] = useState()
 
   return (
     <div className="App">
+      <UserContext.Provider value={user}>
       <Router>
-        <Navbar user={user} />
+        <Navbar setTimedOut={setTimedOut} setFetching={setFetching} setUser={setUser}/>
         <Routes>
           <Route
             path='/login'
             element={<LandingPage
+            loginRequired={loginRequired}
               fetching={fetching}
               setFetching={setFetching}
               setTimedOut={setTimedOut}
@@ -50,6 +55,18 @@ function App() {
           <Route
             path='/blog/:post'
             element={<DetailPage
+              setLoginRequired={setLoginRequired}
+              setUser={setUser}
+              user={user}
+              setUpdate={setUpdate}
+              update={update}
+              fetching={fetching}
+              setFetching={setFetching}
+              setTimedOut={setTimedOut} />} />
+          <Route
+            path='/:tag'
+            element={<SortByTag
+              setUser={setUser}
               user={user}
               setUpdate={setUpdate}
               update={update}
@@ -58,6 +75,7 @@ function App() {
               setTimedOut={setTimedOut} />} />
         </Routes>
       </Router>
+      </UserContext.Provider>
     </div>
   )
 }

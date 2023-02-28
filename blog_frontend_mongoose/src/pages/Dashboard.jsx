@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import AddPost from "../components/AddPost";
 import SinglePost from "../components/SinglePost";
 import Spinner from "../components/Spinner";
+import BlogViewSection from "../shared/BlogViewSection";
 import Button from "../shared/Button";
+import H1 from "../shared/H1";
+import StandardP from "../shared/StandardP";
 
 const Dashboard = ({ setTimedOut, setFetching, fetching, setUpdate, update, user, setUser }) => {
     const [openEditor, setOpenEditor] = useState(false)
@@ -20,7 +23,10 @@ const Dashboard = ({ setTimedOut, setFetching, fetching, setUpdate, update, user
             setFetching(false)
             const data = await response.json()
             setPosts(data)
-            setNoPosts(false)
+            if (!data[0]) {
+                setNoPosts(true)
+            }
+            else setNoPosts(false)
         }
         else {
             setFetching(false)
@@ -29,7 +35,7 @@ const Dashboard = ({ setTimedOut, setFetching, fetching, setUpdate, update, user
     }
 
 
-    useEffect(() => {
+    useEffect(() => { 
         setFetching(true)
         const userData = async () => {
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user`, {
@@ -39,7 +45,6 @@ const Dashboard = ({ setTimedOut, setFetching, fetching, setUpdate, update, user
                 getPosts()
                 const data = await response.json()
                 setUser(data)
-                nav('/dashboard')
             }
             else {
                 setFetching(false)
@@ -49,7 +54,7 @@ const Dashboard = ({ setTimedOut, setFetching, fetching, setUpdate, update, user
                     nav('/login')
                     setTimedOut(true)
                 } catch (error) {
-                    return console.log(err.message)
+                    return console.log(error.message)
                 }
             }
         }
@@ -71,30 +76,32 @@ const Dashboard = ({ setTimedOut, setFetching, fetching, setUpdate, update, user
 
     return (
         <main>
-            <h1 className="text-center text-6xl text-blue-800">GooseWind</h1>
+            <H1 />
             {fetching &&
                 <Spinner />}
             {user &&
                 <>
                     <section className="flex flex-col">
-                        <p className="text-blue-800 text-center mt-4 mb-10">Welcome back, {user.first}!</p>
-                        <section className="flex justify-center gap-10">
+                        <StandardP>Welcome back, {user.first}!</StandardP>
+                        <section className="flex justify-center gap-10 my-10">
                             <Button onclick={() => setOpenEditor(prev => !prev)} title={openEditor ? 'Cancel' : 'Add Post'} />
-
                             <Button onclick={logout} title="Log Out" />
                         </section>
-                        {openEditor &&
+                        {openEditor && 
                             <AddPost setOpenEditor={setOpenEditor} setUpdate={setUpdate} fetching={fetching} setFetching={setFetching} />
                         }
-
+                        {noPosts ?
+                            <StandardP>You have no posts. Add your first post now!</StandardP> :
+                            <StandardP>Here are your posts:</StandardP>}
                     </section>
-                    <section className="grid grid-cols-2 auto-rows-max">
-                        {noPosts &&
-                            <p>You have no posts. Add your first post now!</p>}
-                        {posts?.map((post, key) => {
+                    <BlogViewSection>
+                        {!posts ? 
+                        <Spinner />:
+                        <>{posts?.map((post, key) => {
                             return <SinglePost key={key} post={post} user={user} setUpdate={setUpdate} posts={posts} />
-                        })}
-                    </section>
+                        })}</>
+                        }
+                    </BlogViewSection>
                 </>}
         </main>
 

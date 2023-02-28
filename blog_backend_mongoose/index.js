@@ -6,7 +6,7 @@ import { login, logout, register, userCheck } from './controller/userController.
 import { encrypt } from './middleware/encrypt.js'
 import multer from 'multer'
 import cookieParser from 'cookie-parser'
-import { deletePost, editPost, getAllPosts, getSinglePost, getUserPosts, uploadNewPost } from './controller/postController.js'
+import { deletePost, editPost, getAllPosts, getSinglePost, getTaggedPosts, getUserPosts, uploadNewPost } from './controller/postController.js'
 
 const PORT = process.env.PORT
 const app = express()
@@ -35,6 +35,7 @@ app.get('/api/logout', logout)
 // Collection of Posts
 app.get('/api/posts', getUserPosts)
 app.get('/api/allposts', getAllPosts)
+app.get('/api/posts/:tag', getTaggedPosts)
 
 // Single Post
 app.post('/api/post', formReader.none(), uploadNewPost)

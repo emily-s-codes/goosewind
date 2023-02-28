@@ -17,9 +17,7 @@ const postSchema = new Schema({
         minLength: 8,
         required: true
     },
-    tags: [{
-        type: String
-    }],
+    tags: [],
     createdAt: {
         type: Date,
         immutable: true,

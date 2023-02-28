@@ -14,8 +14,13 @@ export const uploadNewPost = async (req, res) => {
     const token = req.cookies.token
     try {
         const result = verifyToken(token)
+        console.log('tags', req.body.tags)
         const dbUser = await User.findOne({ _id: new ObjectId(result.userid) })
-
+        console.log(dbUser)
+        if (!dbUser) {
+            console.log('dbUser not found')
+            res.status(400).end()
+        }
         const newPost = await Post.create({
             title: req.body.title,
             slug: req.body.slug,
@@ -24,7 +29,8 @@ export const uploadNewPost = async (req, res) => {
             createdAt: new Date(),
             updatedAt: new Date(),
             author: dbUser,
-            image: req.body.image
+            image: req.body.image,
+            tags: req.body.tags
         })
         await newPost.populate('author')
         console.log(newPost)
@@ -61,7 +67,7 @@ export const getSinglePost = async (req, res) => {
     const params = req.params.post
     try {
         const post = await Post.find({ _id: new ObjectId(params) }).populate('author')
-        console.log(post)
+        // console.log(post)
         res.status(200).json(post)
     } catch (error) {
 
@@ -81,17 +87,37 @@ export const deletePost = async (req, res) => {
 
 export const editPost = async (req, res) => {
     const params = req.params.post
-    const post = req.body
-    console.log(post)
     try {
         if (req.body.old_id) {
             await deleteImage(req.body.old_id)
         }
-        const update = await Post.updateOne({ _id: new ObjectId(params) }, { title: req.body.title, slug: req.body.slug, content: req.body.content, image: { url: req.body.url, public_id: req.body.public_id } })
+        const update = await Post.updateOne({ _id: new ObjectId(params) }, { 
+            title: req.body.title, 
+            slug: req.body.slug, 
+            content: req.body.content, 
+            image: 
+            { 
+                url: req.body.url, 
+                public_id: req.body.public_id 
+            },
+            updatedAt: new Date(),
+            tags: req.body.tags })
         const updatedPost = await Post.find({ _id: new ObjectId(params) }).populate('author')
         console.log(updatedPost)
         res.status(200).json(update)
     } catch (error) {
         res.status(418).end(error.message)
+    }
+}
+
+export const getTaggedPosts = async(req, res) => {
+    const params = req.params.tag
+    try {
+        const posts = await Post.find().all('tags', [params]).populate('author')
+        console.log(posts)
+        res.status(200).json(posts)
+    } catch (error) {
+        console.log(error.messsage)
+        res.status(400).end()
     }
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import SinglePost from "../components/SinglePost";
 import Spinner from "../components/Spinner";
+import BlogViewSection from "../shared/BlogViewSection";
+import H1 from "../shared/H1";
 
 const PublicBlog = ({ update, setFetching, fetching }) => {
     const [allPosts, setAllPosts] = useState(null)
@@ -12,7 +14,7 @@ const PublicBlog = ({ update, setFetching, fetching }) => {
             if (response.ok) {
                 setFetching(false)
                 const data = await response.json()
-                await setAllPosts(data)
+                setAllPosts(data)
             }
             else {
                 console.log('error loading blog posts')
@@ -24,13 +26,13 @@ const PublicBlog = ({ update, setFetching, fetching }) => {
 
     return (
         <main>
-            <h1 className="text-center text-6xl text-blue-800">GooseWind</h1>
-            <section className="grid grid-cols-2 my-10 mx-20">
+            <H1 />
+            <BlogViewSection>
                 {fetching ? <Spinner /> :
                     allPosts?.map((post, key) => {
                         return <SinglePost key={key} post={post} />
                     })}
-            </section>
+            </BlogViewSection>
         </main>
     );
 }

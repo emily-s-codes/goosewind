@@ -21,7 +21,7 @@ export const login = async (req, res) => {
         const dbUser = await User.findOne({ email: user.email })
         if (dbUser === null || dbUser.pass !== user.pass) {
             console.log('user not found')
-            res.status(401).end
+            res.status(401).end()
         }
         else {
             const token = createToken(dbUser)
